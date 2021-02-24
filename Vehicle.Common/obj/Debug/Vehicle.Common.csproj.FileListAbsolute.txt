@@ -1,0 +1,12 @@
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Common\bin\Debug\Vehicle.Common.dll.config
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Common\bin\Debug\Vehicle.Common.dll
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Common\bin\Debug\Vehicle.Common.pdb
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Common\bin\Debug\EntityFramework.dll
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Common\bin\Debug\EntityFramework.SqlServer.dll
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Common\bin\Debug\EntityFramework.xml
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Common\bin\Debug\EntityFramework.SqlServer.xml
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Common\obj\Debug\Vehicle.Common.csprojAssemblyReference.cache
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Common\obj\Debug\Vehicle.Common.csproj.CoreCompileInputs.cache
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Common\obj\Debug\Vehicle.Common.csproj.CopyComplete
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Common\obj\Debug\Vehicle.Common.dll
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Common\obj\Debug\Vehicle.Common.pdb

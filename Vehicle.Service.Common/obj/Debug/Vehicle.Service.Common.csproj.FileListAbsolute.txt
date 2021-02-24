@@ -1,0 +1,13 @@
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Common\bin\Debug\Vehicle.Service.Common.dll
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Common\bin\Debug\Vehicle.Service.Common.pdb
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Common\bin\Debug\Vehicle.Model.Common.dll
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Common\bin\Debug\Vehicle.Model.dll
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Common\bin\Debug\Vehicle.Model.Common.pdb
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Common\bin\Debug\Vehicle.Model.Common.dll.config
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Common\bin\Debug\Vehicle.Model.pdb
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Common\bin\Debug\Vehicle.Model.dll.config
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Common\obj\Debug\Vehicle.Service.Common.csprojAssemblyReference.cache
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Common\obj\Debug\Vehicle.Service.Common.csproj.CoreCompileInputs.cache
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Common\obj\Debug\Vehicle.Service.Common.csproj.CopyComplete
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Common\obj\Debug\Vehicle.Service.Common.dll
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Common\obj\Debug\Vehicle.Service.Common.pdb
