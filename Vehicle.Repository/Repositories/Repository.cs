@@ -1,92 +1,52 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using Vehicle.Model.Common.Models;
 using Vehicle.Repository.Common.Interfaces;
-using System.Data.Entity.Validation;
 using System.Linq;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Vehicle.DAL.Intefaces;
-using System.Data.Entity.Infrastructure;
 
 namespace Vehicle.Repository.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseVehicle 
     {
-        protected readonly IDbContext Context;
-        private IDbSet<TEntity> _entites;
+        protected readonly IDbContext _context;
 
         public Repository(IDbContext context)
         {
-            Context = context;
+            _context = context;
         }
 
-        public async Task<TEntity> GetByIdAsync(int id)
-        {    
-            var result = await Entites.FirstOrDefaultAsync(i => i.Id == id);
-            return result;
-        }
 
-        public async Task<List<TEntity>> GetAllAsync()
+        public Task<IQueryable<TEntity>> GetAsync()
         {
-            return await Entites.ToListAsync();
+            var query = _context.Set<TEntity>().AsQueryable();
+
+            return Task.FromResult(query);
         }
+
 
         public Task<int> InsertAsync(TEntity entity)
         {
-            DbEntityEntry dbEntityEntry = Context.Entry(entity);
-            if (dbEntityEntry.State != EntityState.Detached)
-            {
-                dbEntityEntry.State = EntityState.Added;
-            }
-            else
-            {
-                Entites.Add(entity);
-            }
+            _context.Set<TEntity>().Add(entity);
 
-            return Task.FromResult(1);
-            
+            return Task.FromResult(1);            
         }
 
         public Task<int> UpdateAsync(TEntity entity)
         {
-            DbEntityEntry dbEntityEntry = Context.Entry(entity);
-            if (dbEntityEntry.State == EntityState.Detached)
-            {
-                Entites.Attach(entity);
-            }
-            dbEntityEntry.State = EntityState.Modified;
+
+            _context.Set<TEntity>().Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
 
             return Task.FromResult(1);
         }
 
         public Task<int> DeleteAsync(TEntity entity)
         {
-            DbEntityEntry dbEntityEntry = Context.Entry(entity);
-            if (dbEntityEntry.State != EntityState.Deleted)
-            {
-                dbEntityEntry.State = EntityState.Deleted;
-            }
-            else
-            {
-                Entites.Attach(entity);
-                Entites.Remove(entity);
-            }
+            _context.Set<TEntity>().Attach(entity);
+            _context.Set<TEntity>().Remove(entity);
 
             return Task.FromResult(1);
-        }
-
-        private IDbSet<TEntity> Entites
-        {
-            get
-            {
-                if (_entites == null)
-                {
-                    _entites = Context.Set<TEntity>();
-                }
-
-                return _entites;
-            }
         }
     }
 }

@@ -1,46 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity.Validation;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Vehicle.Model.Models;
+using Vehicle.Model.Entities;
 using Vehicle.Repository.Common.Interfaces;
 using Vehicle.Service.Common.Interfaces;
 using Vehicle.Common.Helpers;
+using AutoMapper;
+using Vehicle.Model.Common.Interfaces;
 
 namespace Vehicle.Service.Services
 {
     public class ModelService : IModelService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public ModelService(IUnitOfWork unitOfWork)
+        public ModelService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public async Task<List<VehicleModel>> GetModelsAsync()
+        public async Task<PagedList<IVehicleModelDTO>> FindModelsAsync(QueryStringParameters qSParameters)
         {
-            return await _unitOfWork.ModelRepository.GetAllAsync();
+
+            var models = await _unitOfWork.ModelRepository.FindModelsAsync(qSParameters);
+            var modelsDTO = _mapper.Map<List<VehicleModel>, List<IVehicleModelDTO>>(models);
+
+            return new PagedList<IVehicleModelDTO>(modelsDTO, models.TotalCount, models.CurrentPage, models.PageSize);
         }
 
-        public async Task<VehicleModel> GetModelAsync(int id)
+        public async Task<IVehicleModelDTO> GetModelAsync(IVehicleModelDTO modelDTO)
         {
-            return await _unitOfWork.ModelRepository.GetByIdAsync(id);
+            return _mapper.Map<IVehicleModelDTO>
+                (
+                    await _unitOfWork.ModelRepository.GetModelByIdAsync(modelDTO.Id)
+                );             
         }
 
-        public async void InsertModelAsync(VehicleModel model)
+        public async Task<int> InsertModelAsync(IVehicleModelDTO modelDTO)
         {
             try
             {
-                if (model == null)
-                {
-                    throw new ArgumentNullException("model");
-                }
+                var modelToInsert = _mapper.Map<VehicleModel>(modelDTO);
 
-                await _unitOfWork.ModelRepository.InsertAsync(model);
+                await _unitOfWork.ModelRepository.InsertAsync(modelToInsert);
                 await _unitOfWork.CommitAsync();
+
+                return 1;
             }
             catch (DbEntityValidationException dbEx)
             {
@@ -48,17 +55,16 @@ namespace Vehicle.Service.Services
             }
         }
 
-        public async void UpdateModelAsync(VehicleModel model)
+        public async Task<int> UpdateModelAsync(IVehicleModelDTO modelDTO)
         {
             try
             {
-                if (model == null)
-                {
-                    throw new ArgumentNullException("model");
-                }
+                var modelToUpdate = _mapper.Map<VehicleModel>(modelDTO);
 
-                await _unitOfWork.ModelRepository.UpdateAsync(model);
+                await _unitOfWork.ModelRepository.UpdateAsync(modelToUpdate);
                 await _unitOfWork.CommitAsync();
+
+                return 1;
             }
             catch (DbEntityValidationException dbEx)
             {
@@ -66,17 +72,16 @@ namespace Vehicle.Service.Services
             }
         }
 
-        public async void DeleteModelAsync(VehicleModel model)
+        public async Task<int> DeleteModelAsync(IVehicleModelDTO modelDTO)
         {
             try
             {
-                if (model == null)
-                {
-                    throw new ArgumentNullException("model");
-                }
+                var modelToDelete = _mapper.Map<VehicleModel>(modelDTO);
 
-                await _unitOfWork.ModelRepository.DeleteAsync(model);
+                await _unitOfWork.ModelRepository.DeleteAsync(modelToDelete);
                 await _unitOfWork.CommitAsync();
+
+                return 1;
             }
             catch (DbEntityValidationException dbEx)
             {

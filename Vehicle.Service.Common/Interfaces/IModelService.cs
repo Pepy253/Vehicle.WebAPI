@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vehicle.Model.Models;
+﻿using System.Threading.Tasks;
+using Vehicle.Common.Helpers;
+using Vehicle.Model.Common.Interfaces;
 
 namespace Vehicle.Service.Common.Interfaces
 {
     public interface IModelService
     {
-        Task<List<VehicleModel>> GetModelsAsync();
-        Task<VehicleModel> GetModelAsync(int id);
-        void InsertModelAsync(VehicleModel model);
-        void UpdateModelAsync(VehicleModel model);
-        void DeleteModelAsync(VehicleModel model);
+        Task<PagedList<IVehicleModelDTO>> FindModelsAsync(QueryStringParameters qSParameters);
+        Task<IVehicleModelDTO> GetModelAsync(IVehicleModelDTO modelDTO);
+        Task<int> InsertModelAsync(IVehicleModelDTO modelDTO);
+        Task<int> UpdateModelAsync(IVehicleModelDTO modelDTO);
+        Task<int> DeleteModelAsync(IVehicleModelDTO modelDTO);
     }
 }

@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -61,7 +64,7 @@
       <Name>Vehicle.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Vehicle.Model.Common\Vehicle.Model.Common.csproj">
-      <Project>{FEFA01F0-3CA3-4279-9658-12570F24A793}</Project>
+      <Project>{fefa01f0-3ca3-4279-9658-12570f24a793}</Project>
       <Name>Vehicle.Model.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Vehicle.Model\Vehicle.Model.csproj">

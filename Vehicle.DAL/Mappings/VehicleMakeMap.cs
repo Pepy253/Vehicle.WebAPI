@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity.ModelConfiguration;
-using Vehicle.Model.Models;
+using Vehicle.Model.Entities;
 
 namespace Vehicle.DAL.Mappings
 {
@@ -9,7 +9,9 @@ namespace Vehicle.DAL.Mappings
         {
             HasKey(ma => ma.Id);
 
+            Property(ma => ma.Name).HasMaxLength(50);
             Property(ma => ma.Name).IsRequired();
+            Property(ma => ma.Abrv).HasMaxLength(50);
             Property(ma => ma.Abrv).IsRequired();
 
             HasIndex(ma => ma.Name).IsUnique();

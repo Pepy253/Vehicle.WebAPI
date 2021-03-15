@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using Vehicle.DAL.Intefaces;
 using Vehicle.Model.Common.Models;
-using Vehicle.Model.Models;
 
 namespace Vehicle.DAL.Contexts
 {
@@ -32,7 +31,7 @@ namespace Vehicle.DAL.Contexts
             base.OnModelCreating(modelBuilder);
         }        
 
-        public new IDbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity
+        public new IDbSet<TEntity> Set<TEntity>() where TEntity : BaseVehicle
         { 
             return base.Set<TEntity>();
         }

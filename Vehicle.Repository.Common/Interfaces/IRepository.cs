@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Vehicle.Model.Common.Models;
 
 namespace Vehicle.Repository.Common.Interfaces
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity> where TEntity : BaseVehicle
     {
-        Task<TEntity> GetByIdAsync(int id);
-        Task<List<TEntity>> GetAllAsync();
+        Task<IQueryable<TEntity>> GetAsync();
         Task<int> InsertAsync(TEntity entity);
         Task<int> UpdateAsync(TEntity entity);
         Task<int> DeleteAsync(TEntity entity);

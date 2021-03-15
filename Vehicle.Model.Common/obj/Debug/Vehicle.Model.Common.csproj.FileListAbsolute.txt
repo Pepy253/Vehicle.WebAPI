@@ -9,3 +9,9 @@ E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model.Common\obj\Debug\Vehicle.Model.
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model.Common\obj\Debug\Vehicle.Model.Common.csproj.CopyComplete
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model.Common\obj\Debug\Vehicle.Model.Common.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model.Common\obj\Debug\Vehicle.Model.Common.pdb
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model.Common\obj\Debug\Vehicle.Model.Common.csprojAssemblyReference.cache
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model.Common\bin\Debug\Vehicle.Common.dll
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model.Common\bin\Debug\Vehicle.Common.pdb
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model.Common\bin\Debug\Vehicle.Common.dll.config
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model.Common\bin\Debug\Newtonsoft.Json.dll
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model.Common\bin\Debug\Newtonsoft.Json.xml

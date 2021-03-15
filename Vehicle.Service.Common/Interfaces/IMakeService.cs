@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vehicle.Model.Models;
+﻿using System.Threading.Tasks;
+using Vehicle.Common.Helpers;
+using Vehicle.Model.Common.Interfaces;
 
 namespace Vehicle.Service.Common.Interfaces
 {
     public interface IMakeService
     {
-        Task<List<VehicleMake>> GetMakesAsync();
-        Task<VehicleMake> GetMakeAsync(int id);
-        void InsertMakeAsync(VehicleMake make);
-        void UpdateMakeAsync(VehicleMake make);
-        void DeleteMakeAsync(VehicleMake make);
+        Task<PagedList<IVehicleMakeDTO>> FindMakesAsync(QueryStringParameters qSParameters);
+        Task<IVehicleMakeDTO> GetMakeAsync(IVehicleMakeDTO makeDTO);
+        Task<int> InsertMakeAsync(IVehicleMakeDTO makeDTO);
+        Task<int> UpdateMakeAsync(IVehicleMakeDTO makeDTO);
+        Task<int> DeleteMakeAsync(IVehicleMakeDTO makeDTO);
     }
 }

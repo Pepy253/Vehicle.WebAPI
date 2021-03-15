@@ -51,8 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\VehicleMake.cs" />
-    <Compile Include="Models\VehicleModel.cs" />
+    <Compile Include="DTOs\VehicleMakeDTO.cs" />
+    <Compile Include="DTOs\VehicleModelDTO.cs" />
+    <Compile Include="Entities\VehicleMake.cs" />
+    <Compile Include="Entities\VehicleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

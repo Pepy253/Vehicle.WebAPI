@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity.ModelConfiguration;
-using Vehicle.Model.Models;
+using Vehicle.Model.Entities;
 
 namespace Vehicle.DAL.Mappings
 {
@@ -8,18 +8,14 @@ namespace Vehicle.DAL.Mappings
         public VehicleModelMap()
         {
             HasKey(mo => mo.Id);
-
-            Property(mo => mo.MakeId).IsRequired();
+            
+            Property(mo => mo.Name).HasMaxLength(50);
             Property(mo => mo.Name).IsRequired();
+            Property(mo => mo.Abrv).HasMaxLength(50);
             Property(mo => mo.Abrv).IsRequired();
 
-            HasIndex(mo => mo.Name).IsUnique();
-            HasIndex(mo => mo.MakeId).IsUnique();
+            HasIndex(mo => mo.Name).IsUnique();            
             HasIndex(mo => mo.Abrv).IsUnique();
-
-            HasRequired(mo => mo.VehicleMake)
-                .WithMany()
-                .HasForeignKey(mo => mo.MakeId);
 
             ToTable("VehicleModel");
         }
