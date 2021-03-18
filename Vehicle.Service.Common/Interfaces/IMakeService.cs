@@ -6,10 +6,10 @@ namespace Vehicle.Service.Common.Interfaces
 {
     public interface IMakeService
     {
-        Task<PagedList<IVehicleMakeDTO>> FindMakesAsync(QueryStringParameters qSParameters);
-        Task<IVehicleMakeDTO> GetMakeAsync(IVehicleMakeDTO makeDTO);
-        Task<int> InsertMakeAsync(IVehicleMakeDTO makeDTO);
-        Task<int> UpdateMakeAsync(IVehicleMakeDTO makeDTO);
-        Task<int> DeleteMakeAsync(IVehicleMakeDTO makeDTO);
+        Task<PagedList<IVehicleMake>> FindMakesAsync(PagingParams paging, SortingParams sorting, FilteringParams filtering);
+        Task<IVehicleMake> GetMakeAsync(IVehicleMake makeDTO);
+        Task<int> InsertMakeAsync(IVehicleMake makeDTO);
+        Task<int> UpdateMakeAsync(IVehicleMake makeDTO);
+        Task<int> DeleteMakeAsync(IVehicleMake makeDTO);
     }
 }

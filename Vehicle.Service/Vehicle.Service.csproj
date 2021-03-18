@@ -63,6 +63,10 @@
       <Project>{b1a79420-dd11-4af6-a26c-d1d88826a5d3}</Project>
       <Name>Vehicle.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Vehicle.DAL\Vehicle.DAL.csproj">
+      <Project>{47E04691-AF7D-4D60-9E91-0EDD266AC9FB}</Project>
+      <Name>Vehicle.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Vehicle.Model.Common\Vehicle.Model.Common.csproj">
       <Project>{fefa01f0-3ca3-4279-9658-12570f24a793}</Project>
       <Name>Vehicle.Model.Common</Name>

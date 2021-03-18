@@ -6,8 +6,8 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using Vehicle.Common.Helpers;
+using Vehicle.DAL.Entities;
 using Vehicle.DAL.Intefaces;
-using Vehicle.Model.Entities;
 using Vehicle.Repository.Common.Interfaces;
 using Vehicle.Repository.Repositories;
 using Xunit;
@@ -23,13 +23,13 @@ namespace Vehicle.Repository.Tests.Tests
             Context = new Mock<IDbContext>();;
         }
 
-        public Task<List<VehicleMake>> GetMakes()
+        public Task<List<VehicleMakeEntity>> GetMakes()
         {
-            List<VehicleMake> makes = new List<VehicleMake>();
+            List<VehicleMakeEntity> makes = new List<VehicleMakeEntity>();
 
             for (int i = 1; i <= 10; i++)
             {
-                makes.Add(new VehicleMake()
+                makes.Add(new VehicleMakeEntity()
                 {
                     Id = i,
                     Name = "Make" + i,
@@ -60,12 +60,12 @@ namespace Vehicle.Repository.Tests.Tests
         }
 
         [Fact]
-        public async Task VehicleMakeRepository_GetByIdAsync_Should_Get_Make()
+        public async Task VehicleMakeEntityRepository_GetByIdAsync_Should_Get_Make()
         {
             //Arrange
             var makes = await GetMakes();
-            Mock<IDbSet<VehicleMake>> makesMock = CreateDbSetMock<VehicleMake>(makes);
-            Context.Setup(x => x.Set<VehicleMake>()).Returns(makesMock.Object);
+            Mock<IDbSet<VehicleMakeEntity>> makesMock = CreateDbSetMock<VehicleMakeEntity>(makes);
+            Context.Setup(x => x.Set<VehicleMakeEntity>()).Returns(makesMock.Object);
             IUnitOfWork unitOfWork = new UnitOfWork(Context.Object);
 
             int vehicleId = 2;
@@ -85,8 +85,8 @@ namespace Vehicle.Repository.Tests.Tests
         {
             //Arrange
             var makes = await GetMakes();
-            Mock<IDbSet<VehicleMake>> makesMock = CreateDbSetMock<VehicleMake>(makes);
-            Context.Setup(x => x.Set<VehicleMake>()).Returns(makesMock.Object);
+            Mock<IDbSet<VehicleMakeEntity>> makesMock = CreateDbSetMock<VehicleMakeEntity>(makes);
+            Context.Setup(x => x.Set<VehicleMakeEntity>()).Returns(makesMock.Object);
             IUnitOfWork unitOfWork = new UnitOfWork(Context.Object);
 
             int vehicleId = 12;
@@ -99,17 +99,19 @@ namespace Vehicle.Repository.Tests.Tests
         }
 
        [Fact]
-        public async Task VehicleMakeRepository_FindAsync_Should_Return_List()
+        public async Task VehicleMakeEntityRepository_FindAsync_Should_Return_List()
         {
             //Arrange
             var makes = await GetMakes();
-            Mock<IDbSet<VehicleMake>> makesMock = CreateDbSetMock<VehicleMake>(makes);
-            Context.Setup(x => x.Set<VehicleMake>()).Returns(makesMock.Object);
+            Mock<IDbSet<VehicleMakeEntity>> makesMock = CreateDbSetMock<VehicleMakeEntity>(makes);
+            Context.Setup(x => x.Set<VehicleMakeEntity>()).Returns(makesMock.Object);
             IUnitOfWork unitOfWork = new UnitOfWork(Context.Object);
-            QueryStringParameters qSParameters = new QueryStringParameters();
+            PagingParams pagingParams = new PagingParams();
+            SortingParams sortingParams = new SortingParams();
+            FilteringParams filteringParams = new FilteringParams();
 
             //Act
-            var actual = await unitOfWork.MakeRepository.FindMakesAsync(qSParameters);
+            var actual = await unitOfWork.MakeRepository.FindMakesAsync(pagingParams, sortingParams, filteringParams);
 
             //Assert
             actual.Should().NotBeNull();
@@ -124,15 +126,15 @@ namespace Vehicle.Repository.Tests.Tests
         {
             //Arrange
             var makes = await GetMakes();
-            Mock<IDbSet<VehicleMake>> makesMock = CreateDbSetMock<VehicleMake>(makes);
-            Context.Setup(x => x.Set<VehicleMake>()).Returns(makesMock.Object);
-            makesMock.Setup(x => x.Add(It.IsAny<VehicleMake>()))
-                .Returns((VehicleMake m) => m)
-                .Callback((VehicleMake m) => makes.Add(m));
+            Mock<IDbSet<VehicleMakeEntity>> makesMock = CreateDbSetMock<VehicleMakeEntity>(makes);
+            Context.Setup(x => x.Set<VehicleMakeEntity>()).Returns(makesMock.Object);
+            makesMock.Setup(x => x.Add(It.IsAny<VehicleMakeEntity>()))
+                .Returns((VehicleMakeEntity m) => m)
+                .Callback((VehicleMakeEntity m) => makes.Add(m));
             Context.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
             IUnitOfWork unitOfWork = new UnitOfWork(Context.Object);
 
-            var make = new VehicleMake()
+            var make = new VehicleMakeEntity()
             {
                 Id = 11,
                 Name = "Entity11",
@@ -153,11 +155,11 @@ namespace Vehicle.Repository.Tests.Tests
         public async Task VehicleMakeRepository_DeleteAsync_Should_Delete_Make()
         {
             var makes = await GetMakes();
-            Mock<IDbSet<VehicleMake>> makesMock = CreateDbSetMock<VehicleMake>(makes);
-            Context.Setup(x => x.Set<VehicleMake>()).Returns(makesMock.Object);
-            makesMock.Setup(x => x.Remove(It.IsAny<VehicleMake>()))
-                .Returns((VehicleMake m) => m)
-                .Callback((VehicleMake m) =>
+            Mock<IDbSet<VehicleMakeEntity>> makesMock = CreateDbSetMock<VehicleMakeEntity>(makes);
+            Context.Setup(x => x.Set<VehicleMakeEntity>()).Returns(makesMock.Object);
+            makesMock.Setup(x => x.Remove(It.IsAny<VehicleMakeEntity>()))
+                .Returns((VehicleMakeEntity m) => m)
+                .Callback((VehicleMakeEntity m) =>
                 {
                     var makeTD = makes.Find(x => x.Id == m.Id);
                     makes.Remove(makeTD);
@@ -165,7 +167,7 @@ namespace Vehicle.Repository.Tests.Tests
             Context.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
             IUnitOfWork unitOfWork = new UnitOfWork(Context.Object);
 
-            var makeToDelete = new VehicleMake()
+            var makeToDelete = new VehicleMakeEntity()
             {
                 Id = 3
             };

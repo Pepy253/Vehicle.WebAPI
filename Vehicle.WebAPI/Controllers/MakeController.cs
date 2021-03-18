@@ -1,27 +1,33 @@
-﻿using Newtonsoft.Json;
+﻿using AutoMapper;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Vehicle.Common.Helpers;
-using Vehicle.Model.DTOs;
+using Vehicle.Model.Common.Interfaces;
 using Vehicle.Service.Common.Interfaces;
+using Vehicle.WebAPI.Models;
 
 namespace Vehicle.WebAPI.Controllers
 {
     public class MakeController : ApiController
     {
         private readonly IMakeService _makeService;
+        private readonly IMapper _mapper;
 
-        public MakeController(IMakeService makeService)
+        public MakeController(IMakeService makeService, IMapper mapper)
         {
             _makeService = makeService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> Makes([FromUri]QueryStringParameters qSParameters)
+        public async Task<HttpResponseMessage> Makes([FromUri]PagingParams paging, [FromUri]SortingParams sorting, [FromUri]FilteringParams filtering)
         {
-            var makes = await _makeService.FindMakesAsync(qSParameters);
+            var makes = await _makeService.FindMakesAsync(paging, sorting, filtering);
+            var makesDTO = _mapper.Map<List<IVehicleMake>, List<VehicleMakeDTO>>(makes);
 
             var metadata = new
             {
@@ -36,7 +42,7 @@ namespace Vehicle.WebAPI.Controllers
             var response = Request.CreateResponse
                 (
                     HttpStatusCode.OK,
-                    await _makeService.FindMakesAsync(qSParameters),
+                    new PagedList<VehicleMakeDTO>(makesDTO, makes.TotalCount, makes.CurrentPage, makes.PageSize),
                     Configuration.Formatters.JsonFormatter
                 );
 
@@ -48,7 +54,7 @@ namespace Vehicle.WebAPI.Controllers
         [HttpGet]
         public async Task<HttpResponseMessage> GetMake([FromUri]VehicleMakeDTO makeDTO)
         {
-            var make = await _makeService.GetMakeAsync(makeDTO);
+            var make = await _makeService.GetMakeAsync(_mapper.Map<IVehicleMake>(makeDTO));
 
             if (make == null)
             {
@@ -58,7 +64,7 @@ namespace Vehicle.WebAPI.Controllers
             return Request.CreateResponse
                 (
                     HttpStatusCode.OK,
-                    await _makeService.GetMakeAsync(makeDTO),
+                    _mapper.Map<VehicleMakeDTO>(make),
                     Configuration.Formatters.JsonFormatter
                 );
         }
@@ -71,7 +77,7 @@ namespace Vehicle.WebAPI.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            await _makeService.InsertMakeAsync(makeDTO);
+            await _makeService.InsertMakeAsync(_mapper.Map<IVehicleMake>(makeDTO));
 
             return Request.CreateResponse(HttpStatusCode.Created, "Vehicle make successfully created!");
         }
@@ -84,7 +90,7 @@ namespace Vehicle.WebAPI.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
             }
 
-            await _makeService.UpdateMakeAsync(makeDTO);
+            await _makeService.UpdateMakeAsync(_mapper.Map<IVehicleMake>(makeDTO));
 
             return Request.CreateResponse(HttpStatusCode.OK, "Vehicle make updated successfully!");
         }
@@ -97,7 +103,7 @@ namespace Vehicle.WebAPI.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Vehicle make not found!");
             }
 
-            await _makeService.DeleteMakeAsync(makeDTO);
+            await _makeService.DeleteMakeAsync(_mapper.Map<IVehicleMake>(makeDTO));
 
             return Request.CreateResponse(HttpStatusCode.OK, "Vehicle make successfully deleted");
         }

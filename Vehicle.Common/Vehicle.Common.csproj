@@ -52,8 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ExceptionHelper.cs" />
+    <Compile Include="Helpers\FilteringParams.cs" />
     <Compile Include="Helpers\PagedList.cs" />
-    <Compile Include="Helpers\QueryStringParameters.cs" />
+    <Compile Include="Helpers\PagingParams.cs" />
+    <Compile Include="Helpers\SortingParams.cs" />
     <Compile Include="Helpers\TestDbAsyncQueryProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

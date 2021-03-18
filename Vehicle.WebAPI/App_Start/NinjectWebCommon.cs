@@ -13,16 +13,14 @@ namespace Vehicle.WebAPI.App_Start
     using Ninject.Web.Common.WebHost;
     using Vehicle.DAL.Contexts;
     using Vehicle.DAL.Intefaces;
-    using Vehicle.Model.Common.Models;
-    using Vehicle.Model.Entities;
     using Vehicle.Repository.Common.Interfaces;
     using Vehicle.Repository.Repositories;
     using Vehicle.Service.Common.Interfaces;
     using Vehicle.Service.Services;
     using System.Web.Http;
     using Ninject.Web.WebApi;
-    using Vehicle.Model.DTOs;
     using Vehicle.Model.Common.Interfaces;
+    using Vehicle.Model.Models;
 
     public static class NinjectWebCommon 
     {
@@ -83,11 +81,10 @@ namespace Vehicle.WebAPI.App_Start
             kernel.Bind<IMakeService>().To<MakeService>();
             kernel.Bind<IModelService>().To<ModelService>();
             kernel.Bind<IDbContext>().To<VehicleDbContext>();
-            kernel.Bind<IVehicle>().To<BaseVehicle>();            
-            kernel.Bind<IVehicleMakeDTO>().To<VehicleMakeDTO>();
-            kernel.Bind<IVehicleModelDTO>().To<VehicleModelDTO>();
-            kernel.Bind<IMakeReposiotry>().To<MakeRepository>();
+            kernel.Bind<IMakeRepository>().To<MakeRepository>();
             kernel.Bind<IModelRepository>().To<ModelRepository>();
+            kernel.Bind<IVehicleMake>().To<VehicleMake>();
+            kernel.Bind<IVehicleModel>().To<VehicleModel>();
         }
     }
 }

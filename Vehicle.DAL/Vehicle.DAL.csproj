@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\VehicleDbContext.cs" />
+    <Compile Include="Entities\VehicleMakeEntity.cs" />
+    <Compile Include="Entities\VehicleModelEntity.cs" />
     <Compile Include="Intefaces\IDbContext.cs" />
     <Compile Include="Mappings\VehicleMakeMap.cs" />
     <Compile Include="Mappings\VehicleModelMap.cs" />

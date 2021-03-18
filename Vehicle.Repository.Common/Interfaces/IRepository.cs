@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Vehicle.Model.Common.Models;
 
 namespace Vehicle.Repository.Common.Interfaces
 {
-    public interface IRepository<TEntity> where TEntity : BaseVehicle
+    public interface IRepository<TEntity> where TEntity : class
     {
         Task<IQueryable<TEntity>> GetAsync();
         Task<int> InsertAsync(TEntity entity);

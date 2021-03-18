@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using Vehicle.DAL.Entities;
 using Vehicle.Model.Common.Interfaces;
-using Vehicle.Model.Entities;
+using Vehicle.WebAPI.Models;
 
 namespace Vehicle.WebAPI.AutoMapperConfig
 {
@@ -8,8 +9,10 @@ namespace Vehicle.WebAPI.AutoMapperConfig
     {
         public AutoMapperProfile()
         {
-            CreateMap<VehicleMake, IVehicleMakeDTO>().ReverseMap();
-            CreateMap<VehicleModel, IVehicleModelDTO>().ReverseMap();            
+            CreateMap<VehicleMakeEntity, IVehicleMake>().ReverseMap();
+            CreateMap<VehicleModelEntity, IVehicleModel>().ReverseMap();
+            CreateMap<VehicleMakeDTO, IVehicleMake>().ReverseMap();
+            CreateMap<VehicleModelDTO, IVehicleModel>().ReverseMap();
         }
     }
 }

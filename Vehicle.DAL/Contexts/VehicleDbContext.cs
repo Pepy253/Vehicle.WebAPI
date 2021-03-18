@@ -4,7 +4,6 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Reflection;
 using Vehicle.DAL.Intefaces;
-using Vehicle.Model.Common.Models;
 
 namespace Vehicle.DAL.Contexts
 {
@@ -31,7 +30,7 @@ namespace Vehicle.DAL.Contexts
             base.OnModelCreating(modelBuilder);
         }        
 
-        public new IDbSet<TEntity> Set<TEntity>() where TEntity : BaseVehicle
+        public new IDbSet<TEntity> Set<TEntity>() where TEntity : class
         { 
             return base.Set<TEntity>();
         }

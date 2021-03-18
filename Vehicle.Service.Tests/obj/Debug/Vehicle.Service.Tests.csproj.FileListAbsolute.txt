@@ -7,7 +7,6 @@ E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\EntityFramewo
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\EntityFramework.SqlServer.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\FluentAssertions.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\Moq.dll
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\PagedList.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\System.Threading.Tasks.Extensions.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\Vehicle.Common.dll
@@ -42,7 +41,6 @@ E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\EntityFramewo
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\FluentAssertions.pdb
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\FluentAssertions.xml
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\Moq.xml
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\PagedList.xml
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\System.Threading.Tasks.Extensions.xml
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service.Tests\bin\Debug\xunit.core.xml

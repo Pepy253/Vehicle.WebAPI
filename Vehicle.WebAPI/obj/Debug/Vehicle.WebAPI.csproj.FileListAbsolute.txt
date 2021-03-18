@@ -103,7 +103,5 @@ E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.WebAPI\obj\Debug\Vehicle.WebAPI.cspro
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.WebAPI\obj\Debug\Vehicle.WebAPI.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.WebAPI\obj\Debug\Vehicle.WebAPI.pdb
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.WebAPI\bin\AutoMapper.dll
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.WebAPI\bin\PagedList.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.WebAPI\bin\AutoMapper.xml
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.WebAPI\bin\PagedList.xml
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.WebAPI\bin\Ninject.WebApi.DependencyResolver.dll

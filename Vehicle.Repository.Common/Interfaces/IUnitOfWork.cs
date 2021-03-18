@@ -5,7 +5,7 @@ namespace Vehicle.Repository.Common.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IMakeReposiotry MakeRepository { get; }
+        IMakeRepository MakeRepository { get; }
         IModelRepository ModelRepository { get; }
         Task<int>CommitAsync();
     }

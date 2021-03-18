@@ -6,10 +6,10 @@ namespace Vehicle.Service.Common.Interfaces
 {
     public interface IModelService
     {
-        Task<PagedList<IVehicleModelDTO>> FindModelsAsync(QueryStringParameters qSParameters);
-        Task<IVehicleModelDTO> GetModelAsync(IVehicleModelDTO modelDTO);
-        Task<int> InsertModelAsync(IVehicleModelDTO modelDTO);
-        Task<int> UpdateModelAsync(IVehicleModelDTO modelDTO);
-        Task<int> DeleteModelAsync(IVehicleModelDTO modelDTO);
+        Task<PagedList<IVehicleModel>> FindModelsAsync(PagingParams paging, SortingParams sorting, FilteringParams filtering);
+        Task<IVehicleModel> GetModelAsync(IVehicleModel model);
+        Task<int> InsertModelAsync(IVehicleModel model);
+        Task<int> UpdateModelAsync(IVehicleModel model);
+        Task<int> DeleteModelAsync(IVehicleModel model);
     }
 }

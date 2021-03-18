@@ -55,10 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IVehicle.cs" />
-    <Compile Include="Interfaces\IVehicleModelDTO.cs" />
-    <Compile Include="Models\BaseVehicle.cs" />
-    <Compile Include="Interfaces\IVehicleMakeDTO.cs" />
+    <Compile Include="Interfaces\IVehicleMake.cs" />
+    <Compile Include="Interfaces\IVehicleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

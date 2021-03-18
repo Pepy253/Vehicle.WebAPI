@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IMakeReposiotry.cs" />
+    <Compile Include="Interfaces\IMakeRepository.cs" />
     <Compile Include="Interfaces\IModelRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
@@ -61,6 +61,10 @@
     <ProjectReference Include="..\Vehicle.Common\Vehicle.Common.csproj">
       <Project>{b1a79420-dd11-4af6-a26c-d1d88826a5d3}</Project>
       <Name>Vehicle.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vehicle.DAL\Vehicle.DAL.csproj">
+      <Project>{47e04691-af7d-4d60-9e91-0edd266ac9fb}</Project>
+      <Name>Vehicle.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Vehicle.Model.Common\Vehicle.Model.Common.csproj">
       <Project>{fefa01f0-3ca3-4279-9658-12570f24a793}</Project>

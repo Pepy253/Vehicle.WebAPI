@@ -1,9 +1,9 @@
 ﻿using System.Data.Entity.ModelConfiguration;
-using Vehicle.Model.Entities;
+using Vehicle.DAL.Entities;
 
 namespace Vehicle.DAL.Mappings
 {
-    public class VehicleMakeMap : EntityTypeConfiguration<VehicleMake>
+    public class VehicleMakeMap : EntityTypeConfiguration<VehicleMakeEntity>
     {
         public VehicleMakeMap()
         {

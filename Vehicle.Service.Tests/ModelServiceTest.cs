@@ -7,9 +7,9 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using Vehicle.Common.Helpers;
+using Vehicle.DAL.Entities;
 using Vehicle.DAL.Intefaces;
 using Vehicle.Model.Common.Interfaces;
-using Vehicle.Model.Entities;
 using Vehicle.Repository.Common.Interfaces;
 using Vehicle.Repository.Repositories;
 using Vehicle.Service.Common.Interfaces;
@@ -22,13 +22,13 @@ namespace Vehicle.Service.Tests
     public class ModelServiceTest
     {
 
-        public Task<List<VehicleModel>> GetModels()
+        public Task<List<VehicleModelEntity>> GetModels()
         {
-            List<VehicleModel> models = new List<VehicleModel>();
+            List<VehicleModelEntity> models = new List<VehicleModelEntity>();
 
             for (int i = 1; i <= 10; i++)
             {
-                models.Add(new VehicleModel()
+                models.Add(new VehicleModelEntity()
                 {
                     Id = i,
                     Name = "Model" + i,
@@ -39,45 +39,44 @@ namespace Vehicle.Service.Tests
             return Task.FromResult(models);
         }
 
-        public Task<IUnitOfWork> CreateUnitOfWork(List<VehicleModel> models)
+        public Task<IDbContext> CreateMockDBContext(List<VehicleModelEntity> models)
         {
             var modelsAsQueryable = models.AsQueryable();
-            var dbSetMock = new Mock<IDbSet<VehicleModel>>();
+            var dbSetMock = new Mock<IDbSet<VehicleModelEntity>>();
 
             dbSetMock.As<IDbAsyncEnumerable>().Setup(m => m.GetAsyncEnumerator())
-                        .Returns(new TestDbAsyncEnumerator<VehicleModel>(models.GetEnumerator()));
-            dbSetMock.As<IQueryable<VehicleModel>>().Setup(m => m.Provider)
-                        .Returns(new TestDbAsyncQueryProvider<VehicleModel>(modelsAsQueryable.Provider));
-            dbSetMock.As<IQueryable<VehicleModel>>().Setup(m => m.Expression)
+                        .Returns(new TestDbAsyncEnumerator<VehicleModelEntity>(models.GetEnumerator()));
+            dbSetMock.As<IQueryable<VehicleModelEntity>>().Setup(m => m.Provider)
+                        .Returns(new TestDbAsyncQueryProvider<VehicleModelEntity>(modelsAsQueryable.Provider));
+            dbSetMock.As<IQueryable<VehicleModelEntity>>().Setup(m => m.Expression)
                         .Returns(modelsAsQueryable.Expression);
-            dbSetMock.As<IQueryable<VehicleModel>>().Setup(m => m.ElementType)
+            dbSetMock.As<IQueryable<VehicleModelEntity>>().Setup(m => m.ElementType)
                         .Returns(modelsAsQueryable.ElementType);
-            dbSetMock.As<IQueryable<VehicleModel>>().Setup(m => m.GetEnumerator())
+            dbSetMock.As<IQueryable<VehicleModelEntity>>().Setup(m => m.GetEnumerator())
                         .Returns(() => modelsAsQueryable.GetEnumerator());
-            dbSetMock.Setup(x => x.Add(It.IsAny<VehicleModel>()))
-                .Returns((VehicleModel m) => m)
-                .Callback((VehicleModel m) => models.Add(m));
-            dbSetMock.Setup(x => x.Attach(It.IsAny<VehicleModel>()))
-                .Returns((VehicleModel m) => m)
-                .Callback((VehicleModel m) =>
+            dbSetMock.Setup(x => x.Add(It.IsAny<VehicleModelEntity>()))
+                .Returns((VehicleModelEntity m) => m)
+                .Callback((VehicleModelEntity m) => models.Add(m));
+            dbSetMock.Setup(x => x.Attach(It.IsAny<VehicleModelEntity>()))
+                .Returns((VehicleModelEntity m) => m)
+                .Callback((VehicleModelEntity m) =>
                 {
                     var modelToUpdate = models.Find(x => x.Id == m.Id);
                     modelToUpdate.Name = m.Name;
                     modelToUpdate.Abrv = m.Abrv;
                 });
-            dbSetMock.Setup(x => x.Remove(It.IsAny<VehicleModel>()))
-               .Returns((VehicleModel m) => m)
-               .Callback((VehicleModel m) =>
+            dbSetMock.Setup(x => x.Remove(It.IsAny<VehicleModelEntity>()))
+               .Returns((VehicleModelEntity m) => m)
+               .Callback((VehicleModelEntity m) =>
                {
                    var modelTD = models.Find(x => x.Id == m.Id);
                    models.Remove(modelTD);
                });
 
             Mock<IDbContext> contextMock = new Mock<IDbContext>();
-            contextMock.Setup(x => x.Set<VehicleModel>()).Returns(dbSetMock.Object);
-            IUnitOfWork unitOfWork = new UnitOfWork(contextMock.Object);
+            contextMock.Setup(x => x.Set<VehicleModelEntity>()).Returns(dbSetMock.Object);
 
-            return Task.FromResult(unitOfWork);
+            return Task.FromResult(contextMock.Object);
         }
 
         public Task<IMapper> CreateMapper()
@@ -89,28 +88,41 @@ namespace Vehicle.Service.Tests
         }
 
         [Fact]
-        public async Task VehicleModelService_FindAsync_Should_Return_PageList_IVehicleModelDTO()
+        public async Task ModelService_FindModelsAsync_Should_Return_PageList_IVehicleModel()
         {
             var models = await GetModels();
-            IModelService modelService = new ModelService(await CreateUnitOfWork(models), await CreateMapper());
-            QueryStringParameters qSParameters = new QueryStringParameters();
+            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(models));
+            IModelRepository modelRepo = new ModelRepository(await CreateMockDBContext(models));
+            IModelService modelService = new ModelService(uOW, await CreateMapper(), modelRepo);
+            PagingParams pagingParams = new PagingParams();
+            SortingParams sortingParams = new SortingParams
+            {
+                OrderBy = "model_name_desc"
+            };
+            FilteringParams filteringParams = new FilteringParams();
 
-            var actual = await modelService.FindModelsAsync(qSParameters);
+            var actual = await modelService.FindModelsAsync(pagingParams, sortingParams, filteringParams);
 
-            actual.Should().BeOfType(typeof(PagedList<IVehicleModelDTO>));
+            actual.Should().BeOfType(typeof(PagedList<IVehicleModel>));
+            actual.HasNext.Should().BeTrue();
+            actual.HasPrevious.Should().BeFalse();
+            actual.Count().Should().Be(5);
+            actual.Should().BeInDescendingOrder(x => x.Name);
         }
 
         [Fact]
-        public async Task VehicleModelService_GetByIdAsync_Should_Return_IVehicleModelDTO()
+        public async Task ModelService_GetModelAsync_Should_Return_IVehicleModel()
         {
             var models = await GetModels();
             var mapper = await CreateMapper();
-            IModelService modelService = new ModelService(await CreateUnitOfWork(models), mapper);
-            var model = new VehicleModel()
+            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(models));
+            IModelRepository modelRepo = new ModelRepository(await CreateMockDBContext(models));
+            IModelService modelService = new ModelService(uOW, await CreateMapper(), modelRepo);
+            var model = new VehicleModelEntity()
             {
                 Id = 3
             };
-            var modelToFind = mapper.Map<IVehicleModelDTO>(model);
+            var modelToFind = mapper.Map<IVehicleModel>(model);
 
             var actual = await modelService.GetModelAsync(modelToFind);
 
@@ -120,18 +132,20 @@ namespace Vehicle.Service.Tests
 
 
         [Fact]
-        public async Task VehicleModelService_InsertModelAsync_Should_Add_VehicleModel_Object_From_IVehicleModelDTO()
+        public async Task ModelService_InsertModelAsync_Should_Add_VehicleModelEntity_Object_From_IVehicleModel()
         {
             var models = await GetModels();
             var mapper = await CreateMapper();
-            IModelService modelService = new ModelService(await CreateUnitOfWork(models), mapper);
-            var newModel = new VehicleModel()
+            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(models));
+            IModelRepository modelRepo = new ModelRepository(await CreateMockDBContext(models));
+            IModelService modelService = new ModelService(uOW, await CreateMapper(), modelRepo);
+            var newModel = new VehicleModelEntity()
             {
                 Id = 11,
                 Name = "Model11",
                 Abrv = "M11"
             };
-            var modelToInsert = mapper.Map<IVehicleModelDTO>(newModel);
+            var modelToInsert = mapper.Map<IVehicleModel>(newModel);
 
             var actual = await modelService.InsertModelAsync(modelToInsert);
 
@@ -141,18 +155,20 @@ namespace Vehicle.Service.Tests
         }
 
         [Fact]
-        public async Task VehicleModelService_DeleteModelAsync_Should_Delete_VehicleModel_Object_From_IVehicleModelDTO()
+        public async Task ModelService_DeleteModelAsync_Should_Delete_VehicleModel_Object_From_IVehicleModel()
         {
             var models = await GetModels();
             var mapper = await CreateMapper();
-            IModelService modelService = new ModelService(await CreateUnitOfWork(models), mapper);
-            var model = new VehicleModel()
+            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(models));
+            IModelRepository modelRepo = new ModelRepository(await CreateMockDBContext(models));
+            IModelService modelService = new ModelService(uOW, await CreateMapper(), modelRepo);
+            var model = new VehicleModelEntity()
             {
                 Id = 3,
                 Name = "Model3",
                 Abrv = "M3"
             };
-            var modelToDelete = mapper.Map<IVehicleModelDTO>(model);
+            var modelToDelete = mapper.Map<IVehicleModel>(model);
 
             var actual = await modelService.DeleteModelAsync(modelToDelete);
 

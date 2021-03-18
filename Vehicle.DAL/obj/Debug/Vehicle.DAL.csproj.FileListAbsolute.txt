@@ -16,5 +16,3 @@ E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.DAL\obj\Debug\Vehicle.DAL.csproj.Core
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.DAL\obj\Debug\Vehicle.DAL.csproj.CopyComplete
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.DAL\obj\Debug\Vehicle.DAL.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.DAL\obj\Debug\Vehicle.DAL.pdb
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.DAL\bin\Debug\Newtonsoft.Json.dll
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.DAL\bin\Debug\Newtonsoft.Json.xml

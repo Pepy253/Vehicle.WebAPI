@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Threading.Tasks;
 using Vehicle.Common.Helpers;
+using Vehicle.DAL.Entities;
 using Vehicle.Model.Common.Interfaces;
-using Vehicle.Model.Entities;
 using Vehicle.Repository.Common.Interfaces;
 using Vehicle.Service.Common.Interfaces;
 
@@ -12,44 +12,46 @@ namespace Vehicle.Service.Services
 {
     public class MakeService : IMakeService
     {
+        private readonly IMakeRepository _makeRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public MakeService(IUnitOfWork unitOfWork, IMapper mapper)
+        public MakeService(IUnitOfWork unitOfWork, IMapper mapper, IMakeRepository makeReposiotry)
         {
+            _makeRepository = makeReposiotry;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<PagedList<IVehicleMakeDTO>> FindMakesAsync(QueryStringParameters qSParameters)
+        public async Task<PagedList<IVehicleMake>> FindMakesAsync(PagingParams paging, SortingParams sorting, FilteringParams filtering)
         {
-            var makes = await _unitOfWork.MakeRepository.FindMakesAsync(qSParameters);
-            var makesDTO = _mapper.Map<List<VehicleMake>, List<IVehicleMakeDTO>>(makes);            
+            var makes = await _makeRepository.FindMakesAsync(paging, sorting, filtering);
+            var makesDTO = _mapper.Map<List<VehicleMakeEntity>, List<IVehicleMake>>(makes);            
 
-            return new PagedList<IVehicleMakeDTO>(makesDTO, makes.TotalCount, makes.CurrentPage, makes.PageSize);
+            return new PagedList<IVehicleMake>(makesDTO, makes.TotalCount, makes.CurrentPage, makes.PageSize);
         }
 
-        public async Task<IVehicleMakeDTO> GetMakeAsync(IVehicleMakeDTO makeDTO)
+        public async Task<IVehicleMake> GetMakeAsync(IVehicleMake make)
         {          
-            var make = _mapper.Map<IVehicleMakeDTO>
+            var vehicleMake = _mapper.Map<IVehicleMake>
                 (
-                    await _unitOfWork.MakeRepository.GetMakeByIdAsync
+                    await _makeRepository.GetMakeByIdAsync
                     (
-                        makeDTO.Id
+                        make.Id
                     )
                 );
 
-            return make;
+            return vehicleMake;
         }
 
-        public async Task<int> InsertMakeAsync(IVehicleMakeDTO makeDTO)
+        public async Task<int> InsertMakeAsync(IVehicleMake make)
         {
             try
             {
 
-                var makeToAdd = _mapper.Map<VehicleMake>(makeDTO);
+                var makeToAdd = _mapper.Map<VehicleMakeEntity>(make);
 
-                await _unitOfWork.MakeRepository.InsertAsync(makeToAdd);
+                _unitOfWork.MakeRepository.CreateMakeAsync(makeToAdd);
                 await _unitOfWork.CommitAsync();
 
                 return 1;
@@ -60,13 +62,13 @@ namespace Vehicle.Service.Services
             }
         }
 
-        public async Task<int> UpdateMakeAsync(IVehicleMakeDTO makeDTO)
+        public async Task<int> UpdateMakeAsync(IVehicleMake make)
         {
             try
             {
-                var makeToUpdate = _mapper.Map<VehicleMake>(makeDTO);
+                var makeToUpdate = _mapper.Map<VehicleMakeEntity>(make);
 
-                await _unitOfWork.MakeRepository.UpdateAsync(makeToUpdate);
+                _unitOfWork.MakeRepository.UpdateMakeAsync(makeToUpdate);
                 await _unitOfWork.CommitAsync();
 
                 return 1;
@@ -77,13 +79,13 @@ namespace Vehicle.Service.Services
             }
         }
 
-        public async Task<int> DeleteMakeAsync(IVehicleMakeDTO makeDTO)
+        public async Task<int> DeleteMakeAsync(IVehicleMake make)
         {
             try
             {
-                var makeToDelete = _mapper.Map<VehicleMake>(makeDTO);
+                var makeToDelete = _mapper.Map<VehicleMakeEntity>(make);
 
-                await _unitOfWork.MakeRepository.DeleteAsync(makeToDelete);
+                _unitOfWork.MakeRepository.DeleteMakeAsync(makeToDelete);
                 await _unitOfWork.CommitAsync();
 
                 return 1;

@@ -31,8 +31,4 @@ E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service\obj\Debug\Vehicle.Service.csp
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service\obj\Debug\Vehicle.Service.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service\obj\Debug\Vehicle.Service.pdb
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service\bin\Debug\AutoMapper.dll
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service\bin\Debug\PagedList.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service\bin\Debug\AutoMapper.xml
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service\bin\Debug\PagedList.xml
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service\bin\Debug\Newtonsoft.Json.dll
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Service\bin\Debug\Newtonsoft.Json.xml

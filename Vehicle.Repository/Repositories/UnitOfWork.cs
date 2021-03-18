@@ -8,7 +8,7 @@ namespace Vehicle.Repository.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly IDbContext _context;
-        private  IMakeReposiotry _makeRepository;
+        private  IMakeRepository _makeRepository;
         private  IModelRepository _modelRepository;
 
         public UnitOfWork(IDbContext context)
@@ -16,7 +16,7 @@ namespace Vehicle.Repository.Repositories
             _context = context;
         }
 
-        public IMakeReposiotry MakeRepository 
+        public IMakeRepository MakeRepository 
         {
             get
             {

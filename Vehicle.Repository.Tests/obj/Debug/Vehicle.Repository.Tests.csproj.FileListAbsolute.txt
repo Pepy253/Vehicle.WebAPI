@@ -49,7 +49,3 @@ E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Tests\bin\Debug\EntityFram
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Tests\bin\Debug\Vehicle.Common.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Tests\bin\Debug\Vehicle.Common.pdb
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Tests\bin\Debug\Vehicle.Common.dll.config
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Tests\bin\Debug\PagedList.dll
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Tests\bin\Debug\PagedList.xml
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Tests\bin\Debug\Newtonsoft.Json.dll
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Tests\bin\Debug\Newtonsoft.Json.xml

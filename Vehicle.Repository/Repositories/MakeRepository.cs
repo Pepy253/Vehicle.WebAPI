@@ -2,36 +2,36 @@
 using System.Threading.Tasks;
 using System.Data.Entity;
 using Vehicle.DAL.Intefaces;
-using Vehicle.Model.Entities;
+using Vehicle.DAL.Entities;
 using Vehicle.Repository.Common.Interfaces;
 using Vehicle.Common.Helpers;
 
 namespace Vehicle.Repository.Repositories
 {
-    public class MakeRepository : Repository<VehicleMake>, IMakeReposiotry
+    public class MakeRepository : Repository<VehicleMakeEntity>, IMakeRepository
     {
         public MakeRepository(IDbContext _context) 
                 : base(_context)
         {      
         }
 
-        public async Task<PagedList<VehicleMake>> FindMakesAsync(QueryStringParameters qSParameters)
+        public async Task<PagedList<VehicleMakeEntity>> FindMakesAsync(PagingParams paging, SortingParams sorting, FilteringParams filtering)
         {
             var makes = await GetAsync();
 
-            FilterMakes(ref makes, qSParameters.SearchString);
+            FilterMakes(ref makes, filtering.SearchString);
 
-            ApplySort(ref makes, qSParameters.OrderBy);
+            ApplySort(ref makes, sorting.OrderBy);
 
-            return await PagedList<VehicleMake>.ToPagedListAsync
+            return await PagedList<VehicleMakeEntity>.ToPagedListAsync
                 (
                     makes, 
-                    qSParameters.PageNumber, 
-                    qSParameters.PageSize
+                    paging.PageNumber, 
+                    paging.PageSize
                 );            
         }
 
-        private void FilterMakes(ref IQueryable<VehicleMake> makes, string searchString)
+        private void FilterMakes(ref IQueryable<VehicleMakeEntity> makes, string searchString)
         {
             if (!makes.Any() || string.IsNullOrWhiteSpace(searchString))
             {
@@ -41,7 +41,7 @@ namespace Vehicle.Repository.Repositories
             makes = makes.Where(m => m.Name.ToLower() == searchString.ToLower());
         }
 
-        private void ApplySort(ref IQueryable<VehicleMake> makes, string sortOrder)
+        private void ApplySort(ref IQueryable<VehicleMakeEntity> makes, string sortOrder)
         {
             switch (sortOrder)
             {
@@ -54,7 +54,7 @@ namespace Vehicle.Repository.Repositories
             }                
         }
 
-        public async Task<VehicleMake> GetMakeByIdAsync(int id)
+        public async Task<VehicleMakeEntity> GetMakeByIdAsync(int id)
         {
             var make = await GetAsync();
 
@@ -62,17 +62,17 @@ namespace Vehicle.Repository.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public async void CreateMakeAsync(VehicleMake make)
+        public async void CreateMakeAsync(VehicleMakeEntity make)
         {
             await InsertAsync(make);
         }
 
-        public async void UpdateMakeAsync(VehicleMake make)
+        public async void UpdateMakeAsync(VehicleMakeEntity make)
         {
             await UpdateAsync(make);
         }
 
-        public async void DeleteMakeAsync(VehicleMake make)
+        public async void DeleteMakeAsync(VehicleMakeEntity make)
         {
             await DeleteAsync(make);
         }

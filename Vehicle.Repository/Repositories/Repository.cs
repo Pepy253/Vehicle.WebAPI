@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using Vehicle.Model.Common.Models;
 using Vehicle.Repository.Common.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,7 +6,7 @@ using Vehicle.DAL.Intefaces;
 
 namespace Vehicle.Repository.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseVehicle 
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class 
     {
         protected readonly IDbContext _context;
 

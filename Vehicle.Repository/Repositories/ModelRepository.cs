@@ -1,37 +1,39 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Vehicle.DAL.Intefaces;
-using Vehicle.Model.Entities;
 using Vehicle.Repository.Common.Interfaces;
 using Vehicle.Common.Helpers;
 using System.Data.Entity;
+using Vehicle.DAL.Entities;
 
 namespace Vehicle.Repository.Repositories
 {
-    public class ModelRepository : Repository<VehicleModel>, IModelRepository 
+    public class ModelRepository : Repository<VehicleModelEntity>, IModelRepository 
     {
         public ModelRepository(IDbContext _context) 
                 : base (_context)
         {
         }
        
-        public async Task<PagedList<VehicleModel>> FindModelsAsync(QueryStringParameters qSParameters)
+        public async Task<PagedList<VehicleModelEntity>> FindModelsAsync(PagingParams paging, SortingParams sorting, FilteringParams filtering)
         {
             var models = await GetAsync();
 
-            FilterModels(ref models, qSParameters.SearchString);
+            models = models.Include(x => x.VehicleMake);
 
-            ApplySort(ref models, qSParameters.OrderBy);
+            FilterModels(ref models, filtering.SearchString);
 
-            return await PagedList<VehicleModel>.ToPagedListAsync
+            ApplySort(ref models, sorting.OrderBy);
+
+            return await PagedList<VehicleModelEntity>.ToPagedListAsync
                 (
                     models,
-                    qSParameters.PageNumber,
-                    qSParameters.PageSize
+                    paging.PageNumber,
+                    paging.PageSize
                 );
         }
 
-        private void FilterModels(ref IQueryable<VehicleModel> models, string searchString)
+        private void FilterModels(ref IQueryable<VehicleModelEntity> models, string searchString)
         {
             if (!models.Any() || string.IsNullOrWhiteSpace(searchString))
             {
@@ -42,7 +44,7 @@ namespace Vehicle.Repository.Repositories
                 || mo.VehicleMake.Name.ToLower() == searchString.ToLower());
         }
 
-        private void ApplySort(ref IQueryable<VehicleModel> models, string sortOrder)
+        private void ApplySort(ref IQueryable<VehicleModelEntity> models, string sortOrder)
         {
             switch (sortOrder)
             {
@@ -62,24 +64,24 @@ namespace Vehicle.Repository.Repositories
         }
 
 
-        public async Task<VehicleModel> GetModelByIdAsync(int id)
+        public async Task<VehicleModelEntity> GetModelByIdAsync(int id)
         {
             var models = await GetAsync();
 
-            return await models.Where(x => x.Id == id).FirstOrDefaultAsync(); 
+            return await models.Include(x => x.VehicleMake).Where(x => x.Id == id).FirstOrDefaultAsync(); 
         }
 
-        public async  void CreateModelAsync(VehicleModel model)
+        public async  void CreateModelAsync(VehicleModelEntity model)
         {
             await InsertAsync(model);
         }
 
-        public async void UpdateModelAsync(VehicleModel model)
+        public async void UpdateModelAsync(VehicleModelEntity model)
         {
             await UpdateAsync(model);
         }        
 
-        public async void DeleteModelAsync(VehicleModel model)
+        public async void DeleteModelAsync(VehicleModelEntity model)
         {
             await DeleteAsync(model);
         }

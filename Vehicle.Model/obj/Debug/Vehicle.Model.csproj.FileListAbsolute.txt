@@ -13,5 +13,3 @@ E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model\obj\Debug\Vehicle.Model.csproj.
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model\obj\Debug\Vehicle.Model.csproj.CopyComplete
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model\obj\Debug\Vehicle.Model.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model\obj\Debug\Vehicle.Model.pdb
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model\bin\Debug\Newtonsoft.Json.dll
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Model\bin\Debug\Newtonsoft.Json.xml

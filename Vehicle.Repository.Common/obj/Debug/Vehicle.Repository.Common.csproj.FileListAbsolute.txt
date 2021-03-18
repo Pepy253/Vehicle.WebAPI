@@ -16,10 +16,9 @@ E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Common\obj\Debug\Vehicle.R
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Common\obj\Debug\Vehicle.Repository.Common.csproj.CopyComplete
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Common\obj\Debug\Vehicle.Repository.Common.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Common\obj\Debug\Vehicle.Repository.Common.pdb
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Common\bin\Debug\PagedList.dll
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Common\bin\Debug\PagedList.xml
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Common\bin\Debug\Vehicle.Common.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Common\bin\Debug\Vehicle.Common.pdb
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Common\bin\Debug\Vehicle.Common.dll.config
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Common\bin\Debug\Newtonsoft.Json.dll
-E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Common\bin\Debug\Newtonsoft.Json.xml
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Common\bin\Debug\Vehicle.DAL.dll
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Common\bin\Debug\Vehicle.DAL.pdb
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository.Common\bin\Debug\Vehicle.DAL.dll.config
