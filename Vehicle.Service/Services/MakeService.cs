@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Threading.Tasks;
 using Vehicle.Common.Helpers;
-using Vehicle.DAL.Entities;
 using Vehicle.Model.Common.Interfaces;
 using Vehicle.Repository.Common.Interfaces;
 using Vehicle.Service.Common.Interfaces;
@@ -14,44 +13,29 @@ namespace Vehicle.Service.Services
     {
         private readonly IMakeRepository _makeRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
 
-        public MakeService(IUnitOfWork unitOfWork, IMapper mapper, IMakeRepository makeReposiotry)
+        public MakeService(IUnitOfWork unitOfWork, /*IMapper mapper,*/ IMakeRepository makeReposiotry)
         {
             _makeRepository = makeReposiotry;
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
         public async Task<PagedList<IVehicleMake>> FindMakesAsync(PagingParams paging, SortingParams sorting, FilteringParams filtering)
-        {
-            var makes = await _makeRepository.FindMakesAsync(paging, sorting, filtering);
-            var makesDTO = _mapper.Map<List<VehicleMakeEntity>, List<IVehicleMake>>(makes);            
-
-            return new PagedList<IVehicleMake>(makesDTO, makes.TotalCount, makes.CurrentPage, makes.PageSize);
+        {    
+            return await _makeRepository.FindMakesAsync(paging, sorting, filtering);
         }
 
         public async Task<IVehicleMake> GetMakeAsync(IVehicleMake make)
         {          
-            var vehicleMake = _mapper.Map<IVehicleMake>
-                (
-                    await _makeRepository.GetMakeByIdAsync
-                    (
-                        make.Id
-                    )
-                );
-
-            return vehicleMake;
+            return await _makeRepository.GetMakeByIdAsync(make.Id);
         }
 
         public async Task<int> InsertMakeAsync(IVehicleMake make)
         {
             try
             {
-
-                var makeToAdd = _mapper.Map<VehicleMakeEntity>(make);
-
-                _unitOfWork.MakeRepository.CreateMakeAsync(makeToAdd);
+                _unitOfWork.MakeRepository.CreateMakeAsync(make);
                 await _unitOfWork.CommitAsync();
 
                 return 1;
@@ -66,9 +50,7 @@ namespace Vehicle.Service.Services
         {
             try
             {
-                var makeToUpdate = _mapper.Map<VehicleMakeEntity>(make);
-
-                _unitOfWork.MakeRepository.UpdateMakeAsync(makeToUpdate);
+                _unitOfWork.MakeRepository.UpdateMakeAsync(make);
                 await _unitOfWork.CommitAsync();
 
                 return 1;
@@ -83,9 +65,7 @@ namespace Vehicle.Service.Services
         {
             try
             {
-                var makeToDelete = _mapper.Map<VehicleMakeEntity>(make);
-
-                _unitOfWork.MakeRepository.DeleteMakeAsync(makeToDelete);
+                _unitOfWork.MakeRepository.DeleteMakeAsync(make);
                 await _unitOfWork.CommitAsync();
 
                 return 1;

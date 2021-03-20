@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
 using Moq;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,6 +11,7 @@ using Vehicle.DAL.Entities;
 using Vehicle.DAL.Intefaces;
 using Vehicle.Repository.Common.Interfaces;
 using Vehicle.Repository.Repositories;
+using Vehicle.WebAPI.AutoMapperConfig;
 using Xunit;
 
 namespace Vehicle.Repository.Tests.Tests
@@ -40,6 +42,14 @@ namespace Vehicle.Repository.Tests.Tests
             return Task.FromResult(makes);
         }
 
+        public Task<IMapper> CreateMapper()
+        {
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+            IMapper mapper = new Mapper(config);
+
+            return Task.FromResult(mapper);
+        }
+
         public Mock<IDbSet<TEntity>> CreateDbSetMock<TEntity>(IEnumerable<TEntity> elements) where TEntity : class
         {
             var elementsAsQueryable = elements.AsQueryable();
@@ -66,7 +76,7 @@ namespace Vehicle.Repository.Tests.Tests
             var makes = await GetMakes();
             Mock<IDbSet<VehicleMakeEntity>> makesMock = CreateDbSetMock<VehicleMakeEntity>(makes);
             Context.Setup(x => x.Set<VehicleMakeEntity>()).Returns(makesMock.Object);
-            IUnitOfWork unitOfWork = new UnitOfWork(Context.Object);
+            IUnitOfWork unitOfWork = new UnitOfWork(Context.Object, await CreateMapper());
 
             int vehicleId = 2;
 
@@ -87,7 +97,7 @@ namespace Vehicle.Repository.Tests.Tests
             var makes = await GetMakes();
             Mock<IDbSet<VehicleMakeEntity>> makesMock = CreateDbSetMock<VehicleMakeEntity>(makes);
             Context.Setup(x => x.Set<VehicleMakeEntity>()).Returns(makesMock.Object);
-            IUnitOfWork unitOfWork = new UnitOfWork(Context.Object);
+            IUnitOfWork unitOfWork = new UnitOfWork(Context.Object, await CreateMapper());
 
             int vehicleId = 12;
 
@@ -105,7 +115,7 @@ namespace Vehicle.Repository.Tests.Tests
             var makes = await GetMakes();
             Mock<IDbSet<VehicleMakeEntity>> makesMock = CreateDbSetMock<VehicleMakeEntity>(makes);
             Context.Setup(x => x.Set<VehicleMakeEntity>()).Returns(makesMock.Object);
-            IUnitOfWork unitOfWork = new UnitOfWork(Context.Object);
+            IUnitOfWork unitOfWork = new UnitOfWork(Context.Object, await CreateMapper());
             PagingParams pagingParams = new PagingParams();
             SortingParams sortingParams = new SortingParams();
             FilteringParams filteringParams = new FilteringParams();
@@ -132,7 +142,7 @@ namespace Vehicle.Repository.Tests.Tests
                 .Returns((VehicleMakeEntity m) => m)
                 .Callback((VehicleMakeEntity m) => makes.Add(m));
             Context.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
-            IUnitOfWork unitOfWork = new UnitOfWork(Context.Object);
+            IUnitOfWork unitOfWork = new UnitOfWork(Context.Object, await CreateMapper());
 
             var make = new VehicleMakeEntity()
             {
@@ -165,7 +175,7 @@ namespace Vehicle.Repository.Tests.Tests
                     makes.Remove(makeTD);
                 });
             Context.Setup(x => x.SaveChangesAsync()).ReturnsAsync(1);
-            IUnitOfWork unitOfWork = new UnitOfWork(Context.Object);
+            IUnitOfWork unitOfWork = new UnitOfWork(Context.Object, await CreateMapper());
 
             var makeToDelete = new VehicleMakeEntity()
             {

@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.4.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
@@ -115,6 +118,10 @@
     <ProjectReference Include="..\Vehicle.Repository\Vehicle.Repository.csproj">
       <Project>{fd04f76a-e4e5-4c39-8d59-50f85a18d8d2}</Project>
       <Name>Vehicle.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vehicle.WebAPI\Vehicle.WebAPI.csproj">
+      <Project>{6F2FB729-1EAF-458F-AB91-174ABB465D0C}</Project>
+      <Name>Vehicle.WebAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

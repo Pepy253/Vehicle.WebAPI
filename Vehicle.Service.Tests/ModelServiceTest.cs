@@ -91,9 +91,9 @@ namespace Vehicle.Service.Tests
         public async Task ModelService_FindModelsAsync_Should_Return_PageList_IVehicleModel()
         {
             var models = await GetModels();
-            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(models));
-            IModelRepository modelRepo = new ModelRepository(await CreateMockDBContext(models));
-            IModelService modelService = new ModelService(uOW, await CreateMapper(), modelRepo);
+            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(models), await CreateMapper());
+            IModelRepository modelRepo = new ModelRepository(await CreateMockDBContext(models), await CreateMapper());
+            IModelService modelService = new ModelService(uOW, modelRepo);
             PagingParams pagingParams = new PagingParams();
             SortingParams sortingParams = new SortingParams
             {
@@ -115,9 +115,9 @@ namespace Vehicle.Service.Tests
         {
             var models = await GetModels();
             var mapper = await CreateMapper();
-            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(models));
-            IModelRepository modelRepo = new ModelRepository(await CreateMockDBContext(models));
-            IModelService modelService = new ModelService(uOW, await CreateMapper(), modelRepo);
+            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(models), await CreateMapper());
+            IModelRepository modelRepo = new ModelRepository(await CreateMockDBContext(models), await CreateMapper());
+            IModelService modelService = new ModelService(uOW, modelRepo);
             var model = new VehicleModelEntity()
             {
                 Id = 3
@@ -136,9 +136,9 @@ namespace Vehicle.Service.Tests
         {
             var models = await GetModels();
             var mapper = await CreateMapper();
-            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(models));
-            IModelRepository modelRepo = new ModelRepository(await CreateMockDBContext(models));
-            IModelService modelService = new ModelService(uOW, await CreateMapper(), modelRepo);
+            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(models), await CreateMapper());
+            IModelRepository modelRepo = new ModelRepository(await CreateMockDBContext(models), await CreateMapper());
+            IModelService modelService = new ModelService(uOW, modelRepo);
             var newModel = new VehicleModelEntity()
             {
                 Id = 11,
@@ -159,9 +159,9 @@ namespace Vehicle.Service.Tests
         {
             var models = await GetModels();
             var mapper = await CreateMapper();
-            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(models));
-            IModelRepository modelRepo = new ModelRepository(await CreateMockDBContext(models));
-            IModelService modelService = new ModelService(uOW, await CreateMapper(), modelRepo);
+            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(models), await CreateMapper());
+            IModelRepository modelRepo = new ModelRepository(await CreateMockDBContext(models), await CreateMapper());
+            IModelService modelService = new ModelService(uOW, modelRepo);
             var model = new VehicleModelEntity()
             {
                 Id = 3,

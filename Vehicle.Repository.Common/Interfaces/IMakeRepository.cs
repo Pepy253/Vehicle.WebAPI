@@ -1,16 +1,17 @@
 ﻿using System.Threading.Tasks;
 using Vehicle.Common.Helpers;
 using Vehicle.DAL.Entities;
+using Vehicle.Model.Common.Interfaces;
 
 namespace Vehicle.Repository.Common.Interfaces
 {
     public interface IMakeRepository : IRepository<VehicleMakeEntity>
     {
-        Task<PagedList<VehicleMakeEntity>> FindMakesAsync(PagingParams paging, SortingParams sorting, FilteringParams filtering);
-        Task<VehicleMakeEntity> GetMakeByIdAsync(int id);
-        void CreateMakeAsync(VehicleMakeEntity make);
-        void UpdateMakeAsync(VehicleMakeEntity make);
-        void DeleteMakeAsync(VehicleMakeEntity make);
+        Task<PagedList<IVehicleMake>> FindMakesAsync(PagingParams paging, SortingParams sorting, FilteringParams filtering);
+        Task<IVehicleMake> GetMakeByIdAsync(int id);
+        void CreateMakeAsync(IVehicleMake make);
+        void UpdateMakeAsync(IVehicleMake make);
+        void DeleteMakeAsync(IVehicleMake make);
 
     }
 }

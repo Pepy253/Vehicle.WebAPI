@@ -86,3 +86,5 @@ E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository\bin\Debug\Microsoft.Visual
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository\bin\Debug\Microsoft.VisualStudio.RpcContracts.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository\bin\Debug\Newtonsoft.Json.dll
 E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository\bin\Debug\Newtonsoft.Json.xml
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository\bin\Debug\AutoMapper.dll
+E:\Projects ASP.NET\Vehicle.WebAPI\Vehicle.Repository\bin\Debug\AutoMapper.xml

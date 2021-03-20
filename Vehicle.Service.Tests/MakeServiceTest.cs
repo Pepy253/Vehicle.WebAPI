@@ -91,9 +91,9 @@ namespace Vehicle.Service.Tests
         public async Task MakeService_FindMakesAsync_Should_Return_PagedList_IVehicleMake()
         {
             var makes = await GetMakes();
-            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(makes));
-            IMakeRepository makeRepo = new MakeRepository(await CreateMockDBContext(makes));
-            IMakeService makeService = new MakeService(uOW, await CreateMapper(), makeRepo);
+            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(makes), await CreateMapper());
+            IMakeRepository makeRepo = new MakeRepository(await CreateMockDBContext(makes), await CreateMapper());
+            IMakeService makeService = new MakeService(uOW, makeRepo);
             PagingParams pagingParams = new PagingParams();
             SortingParams sortingParams = new SortingParams();
             FilteringParams filteringParams = new FilteringParams();
@@ -110,9 +110,9 @@ namespace Vehicle.Service.Tests
         {
             var makes = await GetMakes();
             var mapper = await CreateMapper();
-            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(makes));
-            IMakeRepository makeRepo = new MakeRepository(await CreateMockDBContext(makes));
-            IMakeService makeService = new MakeService(uOW, mapper, makeRepo);
+            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(makes), await CreateMapper());
+            IMakeRepository makeRepo = new MakeRepository(await CreateMockDBContext(makes), await CreateMapper());
+            IMakeService makeService = new MakeService(uOW, makeRepo);
             var make = new VehicleMakeEntity()
             {
                 Id = 3
@@ -131,9 +131,9 @@ namespace Vehicle.Service.Tests
         {
             var makes = await GetMakes();                       
             var mapper = await CreateMapper();
-            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(makes));
-            IMakeRepository makeRepo = new MakeRepository(await CreateMockDBContext(makes));
-            IMakeService makeService = new MakeService(uOW, mapper, makeRepo);
+            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(makes), await CreateMapper());
+            IMakeRepository makeRepo = new MakeRepository(await CreateMockDBContext(makes), await CreateMapper());
+            IMakeService makeService = new MakeService(uOW, makeRepo);
             var newMake = new VehicleMakeEntity()
             {
                 Id = 11,
@@ -154,9 +154,9 @@ namespace Vehicle.Service.Tests
         {
             var makes = await GetMakes();
             var mapper = await CreateMapper();
-            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(makes));
-            IMakeRepository makeRepo = new MakeRepository(await CreateMockDBContext(makes));
-            IMakeService makeService = new MakeService(uOW, mapper, makeRepo);
+            IUnitOfWork uOW = new UnitOfWork(await CreateMockDBContext(makes), await CreateMapper());
+            IMakeRepository makeRepo = new MakeRepository(await CreateMockDBContext(makes), await CreateMapper());
+            IMakeService makeService = new MakeService(uOW, makeRepo);
             var make = new VehicleMakeEntity()
             {
                 Id = 3,

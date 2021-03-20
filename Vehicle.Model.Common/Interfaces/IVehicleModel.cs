@@ -9,6 +9,7 @@ namespace Vehicle.Model.Common.Interfaces
     public interface IVehicleModel
     {
         int Id { get; set; }
+        int MakeId { get; set; }
         string Name { get; set; }
         string Abrv { get; set; }
         IVehicleMake VehicleMake { get; set; }

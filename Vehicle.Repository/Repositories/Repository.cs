@@ -42,7 +42,7 @@ namespace Vehicle.Repository.Repositories
 
         public Task<int> DeleteAsync(TEntity entity)
         {
-            _context.Set<TEntity>().Attach(entity);
+            //_context.Set<TEntity>().Attach(entity);
             _context.Set<TEntity>().Remove(entity);
 
             return Task.FromResult(1);

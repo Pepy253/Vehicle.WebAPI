@@ -24,9 +24,9 @@ namespace Vehicle.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> Makes([FromUri]PagingParams paging, [FromUri]SortingParams sorting, [FromUri]FilteringParams filtering)
+        public async Task<HttpResponseMessage> Makes([FromUri]Paging paging, [FromUri]Sorting sorting, [FromUri]Filtering filtering)
         {
-            var makes = await _makeService.FindMakesAsync(paging, sorting, filtering);
+            var makes = await _makeService.FindMakesAsync(_mapper.Map<PagingParams>(paging), _mapper.Map<SortingParams>(sorting), _mapper.Map<FilteringParams>(filtering));
             var makesDTO = _mapper.Map<List<IVehicleMake>, List<VehicleMakeDTO>>(makes);
 
             var metadata = new

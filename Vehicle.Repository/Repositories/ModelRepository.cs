@@ -5,17 +5,22 @@ using Vehicle.Repository.Common.Interfaces;
 using Vehicle.Common.Helpers;
 using System.Data.Entity;
 using Vehicle.DAL.Entities;
+using Vehicle.Model.Common.Interfaces;
+using AutoMapper;
+using System.Collections.Generic;
 
 namespace Vehicle.Repository.Repositories
 {
     public class ModelRepository : Repository<VehicleModelEntity>, IModelRepository 
     {
-        public ModelRepository(IDbContext _context) 
+        private readonly IMapper _mapper;
+        public ModelRepository(IDbContext _context, IMapper mapper) 
                 : base (_context)
         {
+            _mapper = mapper;
         }
        
-        public async Task<PagedList<VehicleModelEntity>> FindModelsAsync(PagingParams paging, SortingParams sorting, FilteringParams filtering)
+        public async Task<PagedList<IVehicleModel>> FindModelsAsync(PagingParams paging, SortingParams sorting, FilteringParams filtering)
         {
             var models = await GetAsync();
 
@@ -25,12 +30,17 @@ namespace Vehicle.Repository.Repositories
 
             ApplySort(ref models, sorting.OrderBy);
 
-            return await PagedList<VehicleModelEntity>.ToPagedListAsync
+            var pagedModels =  await PagedList<VehicleModelEntity>.ToPagedListAsync
                 (
                     models,
                     paging.PageNumber,
                     paging.PageSize
                 );
+
+            var listIModels = _mapper.Map<List<VehicleModelEntity>, List<IVehicleModel>>(pagedModels);
+
+            return new PagedList<IVehicleModel>(listIModels, pagedModels.TotalCount, pagedModels.CurrentPage, pagedModels.PageSize);
+
         }
 
         private void FilterModels(ref IQueryable<VehicleModelEntity> models, string searchString)
@@ -64,26 +74,28 @@ namespace Vehicle.Repository.Repositories
         }
 
 
-        public async Task<VehicleModelEntity> GetModelByIdAsync(int id)
+        public async Task<IVehicleModel> GetModelByIdAsync(int id)
         {
             var models = await GetAsync();
 
-            return await models.Include(x => x.VehicleMake).Where(x => x.Id == id).FirstOrDefaultAsync(); 
+            return _mapper.Map<IVehicleModel>(await models.Include(x => x.VehicleMake)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync()); 
         }
 
-        public async  void CreateModelAsync(VehicleModelEntity model)
+        public async void CreateModelAsync(IVehicleModel model)
         {
-            await InsertAsync(model);
+            await InsertAsync(_mapper.Map<VehicleModelEntity>(model));
         }
 
-        public async void UpdateModelAsync(VehicleModelEntity model)
+        public async void UpdateModelAsync(IVehicleModel model)
         {
-            await UpdateAsync(model);
+            await UpdateAsync(_mapper.Map<VehicleModelEntity>(model));
         }        
 
-        public async void DeleteModelAsync(VehicleModelEntity model)
+        public async void DeleteModelAsync(IVehicleModel model)
         {
-            await DeleteAsync(model);
+            await DeleteAsync(_mapper.Map<VehicleModelEntity>(model));
         }
     }
 }

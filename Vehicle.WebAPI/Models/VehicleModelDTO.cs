@@ -10,6 +10,8 @@ namespace Vehicle.WebAPI.Models
     public class VehicleModelDTO
     {
         public int Id { get; set; }
+        [Required]
+        public int MakeId { get; set; }
         [Display(Name = "Model Name")]
         public string Name { get; set; }
         [Display(Name = "Abbreviation")]

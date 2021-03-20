@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using AutoMapper;
+using System.Threading.Tasks;
 using System.Transactions;
 using Vehicle.DAL.Intefaces;
 using Vehicle.Repository.Common.Interfaces;
@@ -8,12 +9,14 @@ namespace Vehicle.Repository.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly IDbContext _context;
+        private readonly IMapper _mapper;
         private  IMakeRepository _makeRepository;
         private  IModelRepository _modelRepository;
 
-        public UnitOfWork(IDbContext context)
+        public UnitOfWork(IDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public IMakeRepository MakeRepository 
@@ -22,7 +25,7 @@ namespace Vehicle.Repository.Repositories
             {
                 if (_makeRepository == null)
                 {
-                    _makeRepository = new MakeRepository(_context);
+                    _makeRepository = new MakeRepository(_context, _mapper);
                 }
                 return _makeRepository;
             }
@@ -34,7 +37,7 @@ namespace Vehicle.Repository.Repositories
             {
                 if (_modelRepository == null)
                 {
-                    _modelRepository = new ModelRepository(_context);
+                    _modelRepository = new ModelRepository(_context, _mapper);
                 }
                 return _modelRepository;
             }

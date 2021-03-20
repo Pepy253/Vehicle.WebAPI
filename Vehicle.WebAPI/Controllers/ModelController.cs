@@ -24,9 +24,9 @@ namespace Vehicle.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> Models([FromUri] PagingParams paging, [FromUri] SortingParams sorting, [FromUri]FilteringParams filtering)
+        public async Task<HttpResponseMessage> Models([FromUri] Paging paging, [FromUri] Sorting sorting, [FromUri] Filtering filtering)
         {            
-            var models = await _modelService.FindModelsAsync(paging, sorting, filtering);
+            var models = await _modelService.FindModelsAsync(_mapper.Map<PagingParams>(paging), _mapper.Map<SortingParams>(sorting), _mapper.Map<FilteringParams>(filtering));
             var modelsDTO = _mapper.Map<List<IVehicleModel>, List<VehicleModelDTO>>(models);
 
             var metadata = new
@@ -64,7 +64,7 @@ namespace Vehicle.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> InsertModel([FromBody] VehicleModelDTO modelDTO)
+        public async Task<HttpResponseMessage> InsertModel([FromBody]VehicleModelDTO modelDTO)
         {
             if (!ModelState.IsValid)
             {
